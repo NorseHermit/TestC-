@@ -1,0 +1,110 @@
+using System;
+
+namespace CalcoloResto
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.Write("Prezzo Oggetto: ");
+            decimal prezzo = Convert.ToInt32(Console.ReadLine());
+
+            Console.Write("Ammontare Pagato: ");
+            decimal pagato = Convert.ToInt32(Console.ReadLine());
+
+            while (pagato < prezzo)
+            {
+                Console.WriteLine("Hai pagato meno del dovuto.");
+                Console.Write("Pagato: ");
+                pagato = Convert.ToInt32(Console.ReadLine());
+
+            }
+
+            Console.Write("Vuoi aggiungere o togliere merce o hai terminato? ");
+            string merce = Console.ReadLine();
+
+            if (merce == "aggiungere")
+            {
+                Console.Write("Scrivi il valore da aggiungere: ");
+                decimal valore = Convert.ToInt32(Console.ReadLine());
+
+                decimal prezzotot = prezzo + valore;
+
+                while (pagato < prezzotot)
+                {
+                    Console.WriteLine("Hai pagato meno del dovuto.");
+                    Console.Write("Pagato: ");
+                    pagato = Convert.ToInt32(Console.ReadLine());
+
+                }
+
+                decimal totaleresto = pagato - prezzotot;
+
+                Cambio resto = new Cambio(totaleresto);
+
+                Console.WriteLine($"Monete d Oro: {resto.MoneteOro}");
+                Console.WriteLine($"Monete d Argento: {resto.MoneteArgento}");
+                Console.WriteLine($"Monete di Bronzo: {resto.MoneteBronzo}");
+
+                Console.ReadKey();
+            }
+            else if (merce == "togliere")
+            {
+                Console.Write("Scrivi il valore da togliere: ");
+                decimal valore = Convert.ToInt32(Console.ReadLine());
+
+                decimal prezzotot = prezzo - valore;
+
+                while (pagato < prezzotot)
+                {
+                    Console.WriteLine("Hai pagato meno del dovuto.");
+                    Console.Write("Pagato: ");
+                    pagato = Convert.ToInt32(Console.ReadLine());
+
+                }
+
+                decimal totaleresto = pagato - prezzotot;
+
+                Cambio resto = new Cambio(totaleresto);
+
+                Console.WriteLine($"Monete d Oro: {resto.MoneteOro}");
+                Console.WriteLine($"Monete d Argento: {resto.MoneteArgento}");
+                Console.WriteLine($"Monete di Bronzo: {resto.MoneteBronzo}");
+
+                Console.ReadKey();
+            }
+            else if (merce == "terminato")
+            {
+                decimal totaleresto = pagato - prezzo;
+
+                Cambio resto = new Cambio(totaleresto);
+
+                Console.WriteLine($"Monete d Oro: {resto.MoneteOro}");
+                Console.WriteLine($"Monete d Argento: {resto.MoneteArgento}");
+                Console.WriteLine($"Monete di Bronzo: {resto.MoneteBronzo}");
+
+                Console.ReadKey();
+            }
+
+        }
+    }
+   
+    public class Cambio
+    {
+        public decimal MoneteOro { get; }
+        public decimal MoneteArgento { get; }
+        public decimal MoneteBronzo { get; }
+ 
+        public Cambio(decimal prezzo)
+        {
+            MoneteOro = (long)(prezzo / 100);
+            prezzo %= 100;
+
+            MoneteArgento = (long)(prezzo / 10);
+            prezzo %= 10;
+
+            MoneteBronzo = (long)(prezzo / 1);
+            prezzo %= 1;
+        }
+    }
+}
