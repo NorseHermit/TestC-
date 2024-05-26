@@ -1,0 +1,22 @@
+using UnityEngine;
+
+public class RollaBall : MonoBehaviour
+{
+    public float speed = 5f;  // Velocità di movimento
+
+    void Update()
+    {
+        // Assi orizzontale e verticale
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
+
+        // Movimento basato sugli input orizzontale e verticale
+        Vector3 movementDirection = new Vector3(horizontalInput, 0f, verticalInput);
+
+        // Normalizzo la direzione
+        movementDirection.Normalize();
+
+        // Movimento vero e proprio della sfera
+        transform.Translate(movementDirection * speed * Time.deltaTime);
+    }
+}
