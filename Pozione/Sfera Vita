@@ -1,0 +1,21 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class SferaVita : MonoBehaviour
+{
+    public int healthAmount = 20;
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            MovimentoBase player = other.GetComponent<MovimentoBase>();
+            if (player != null)
+            {
+                player.Heal(healthAmount); // Chiama la funzione Heal del giocatore per recuperare vita
+                Destroy(gameObject); // Distruggi la sfera dopo essere stata raccolta
+            }
+        }
+    }
+}
