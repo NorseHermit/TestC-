@@ -1,0 +1,40 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Pillolo : MonoBehaviour
+{
+    float x = 0.0f;
+    float y = 0.0f;
+    float z = 0.0f;
+    public float mousesensitivity = 2.0f;
+    public GameObject pillolo;
+    public GameObject MainCamera;
+    // Start is called before the first frame update
+    void Start()
+    {
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetKey(KeyCode.W))
+        {
+            transform.Translate(x, y, z + 0.3f);
+        }
+
+        if (Input.GetKey(KeyCode.S))
+        {
+            transform.Translate(x, y, z - 0.3f);
+        }
+
+        transform.Rotate(0.0f ,Input.GetAxis("Mouse X") * mousesensitivity, 0.0f);
+
+       /* y = y + (Input.GetAxis("Mouse Y") * mousesensitivity);
+
+       MainCamera.transform.localEulerAngles = new Vector3 (0.0f ,y,0.0f);*/
+       
+    }
+
+}
