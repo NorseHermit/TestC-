@@ -1,0 +1,18 @@
+using System;
+using System.Security.Cryptography;
+
+namespace Mischia
+{
+    class Calcolo
+    {
+        static void Main()
+        {
+            int A = 0;
+            int B = 20;
+            var r1 = RandomNumberGenerator.GetInt32(A, B);
+            var r2 = RandomNumberGenerator.GetInt32(A, B);
+            Console.WriteLine(r1 + " " + r2);
+            Console.WriteLine(r2 + " " + r1);
+        }
+    }
+}
