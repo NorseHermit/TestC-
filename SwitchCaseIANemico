@@ -1,0 +1,130 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.AI;
+
+public class Enemy : MonoBehaviour
+{
+    [SerializeField] GameObject player;
+
+    [SerializeField] GameObject WayPointA;
+    [SerializeField] GameObject WayPointB;
+
+    bool waypoinswitch = false;
+    float viewdistance = 4.0f;
+
+    public enum State
+    {
+        patrolSetup,
+        patrol,
+        wait,
+        chase,
+        chaseSetup,
+        arrested
+    }
+
+    State state = State.patrol;
+
+    // 1 = patrolSetup
+    // 2 = patrol
+    // 6 = wait
+    // 3 = chase
+    // 4 = chaseSetup
+    // 5 = arrested
+
+    void Start()
+    {
+        GetComponent<NavMeshAgent>().SetDestination(WayPointB.transform.position);
+    }
+
+
+    void Update()
+    {
+        switch(state)
+        {
+            case State.patrolSetup: // 1 = patrolSetup
+
+                GetComponent<NavMeshAgent>().SetDestination(WayPointA.transform.position);
+                GetComponent<NavMeshAgent>().speed = 3.0f;
+                state = State.patrol;
+                
+                break;
+
+            case State.patrol: // 2 = patrol
+
+               
+                if (GetComponent<NavMeshAgent>().remainingDistance <= 0.2f)
+                {
+                    waypoinswitch = !waypoinswitch;
+
+                    if (waypoinswitch)
+                    {
+                        GetComponent<NavMeshAgent>().SetDestination(WayPointA.transform.position);
+                    }
+                    else
+                    {
+                        GetComponent<NavMeshAgent>().SetDestination(WayPointB.transform.position);
+                    }
+                }
+
+                RaycastHit hit;
+
+                if (Physics.Raycast(transform.position, transform.forward, out hit, viewdistance))
+                {
+                    if (hit.collider.name == "Player")
+                    {
+                        state = State.chase;
+                        Debug.Log("Ho visto il Player");                        
+                    }
+
+                }
+
+                break;
+
+            case State.wait: // 6 = wait
+
+                
+
+                break;
+
+            case State.chase: // 3 = chase
+
+
+                GetComponent<NavMeshAgent>().speed = 5.0f;
+                state = State.chaseSetup;
+
+                break;
+
+            case State.chaseSetup: // 4 = chaseSetup
+
+
+                GetComponent<NavMeshAgent>().SetDestination(player.transform.position);
+
+                float distance = Vector3.Distance(transform.position, player.transform.position);
+
+                if (distance < 1.5f)
+                {
+                    state = State.arrested;
+                }
+                else if (distance > 12.0f)
+                {
+                    state = State.patrolSetup;
+                }
+
+                break;
+
+            case State.arrested: // 5 = arrested
+
+                Debug.Log("Preso !");
+
+                break;
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+
+        Gizmos.DrawRay(transform.position, transform.forward * viewdistance);
+    }
+}
