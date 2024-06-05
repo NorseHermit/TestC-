@@ -1,0 +1,47 @@
+using UnityEngine;
+
+public class CameraRailMovement : MonoBehaviour
+{
+    public Transform[] railPoints; // Array dei punti del binario
+    public float speed = 5f; // Velocità della telecamera
+    private int currentPointIndex = 0; // Indice del punto corrente
+    private Transform targetPoint; // Punto di destinazione corrente
+
+    void Start()
+    {
+        if (railPoints.Length > 0)
+        {
+            targetPoint = railPoints[currentPointIndex];
+        }
+    }
+
+    void Update()
+    {
+        if (railPoints.Length > 0)
+        {
+            MoveCameraAlongRail();
+        }
+    }
+
+    void MoveCameraAlongRail()
+    {
+        // Muovi la telecamera verso il punto di destinazione corrente
+        transform.position = Vector3.MoveTowards(transform.position, targetPoint.position, speed * Time.deltaTime);
+
+        // Controlla se la telecamera ha raggiunto il punto di destinazione
+        if (Vector3.Distance(transform.position, targetPoint.position) < 0.1f)
+        {
+            // Incrementa l'indice del punto corrente per passare al successivo
+            currentPointIndex++;
+
+            // Se l'indice supera il numero di punti, torna al primo punto
+            if (currentPointIndex >= railPoints.Length)
+            {
+                currentPointIndex = 0; // Questo rende il movimento ciclico
+            }
+
+            // Aggiorna il punto di destinazione
+            targetPoint = railPoints[currentPointIndex];
+        }
+    }
+}
