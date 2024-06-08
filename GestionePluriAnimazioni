@@ -1,0 +1,99 @@
+using UnityEngine;
+
+public class PlayerController : MonoBehaviour
+{
+    public float walkSpeed = 2f;
+    public float runSpeed = 5f;
+    public float jumpForce = 5f;
+    public Animator animator;
+
+    private Rigidbody rb;
+    private bool isJumping = false;
+    private bool isAttacking = false;
+    private bool isDead = false;
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+        if (animator == null)
+        {
+            animator = GetComponent<Animator>();
+        }
+    }
+
+    void Update()
+    {
+        if (isDead) return;
+
+        HandleMovement();
+        HandleJump();
+        HandleAttack();
+        UpdateAnimator();
+    }
+
+    void HandleMovement()
+    {
+        float move = Input.GetAxis("Vertical");
+        float strafe = Input.GetAxis("Horizontal");
+
+        Vector3 movement = new Vector3(strafe, 0, move).normalized;
+        if (movement.magnitude >= 0.1f)
+        {
+            float targetSpeed = Input.GetKey(KeyCode.LeftShift) ? runSpeed : walkSpeed;
+            Vector3 moveDir = Quaternion.Euler(0, Camera.main.transform.eulerAngles.y, 0) * movement;
+            transform.position += moveDir * targetSpeed * Time.deltaTime;
+
+            float speedPercent = targetSpeed == runSpeed ? 1f : 0.5f;
+            animator.SetFloat("Speed", speedPercent);
+        }
+        else
+        {
+            animator.SetFloat("Speed", 0);
+        }
+    }
+
+    void HandleJump()
+    {
+        if (Input.GetButtonDown("Jump") && !isJumping)
+        {
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            isJumping = true;
+            animator.SetBool("IsJumping", true);
+        }
+    }
+
+    void HandleAttack()
+    {
+        if (Input.GetButtonDown("Fire1") && !isAttacking)
+        {
+            isAttacking = true;
+            animator.SetBool("IsAttacking", true);
+            Invoke("ResetAttack", 1f); // Assume l'animazione dura 1 secondo
+        }
+    }
+
+    void ResetAttack()
+    {
+        isAttacking = false;
+        animator.SetBool("IsAttacking", false);
+    }
+
+    void UpdateAnimator()
+    {
+        if (isJumping && rb.velocity.y <= 0)
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, Vector3.down, out hit, 1.1f))
+            {
+                isJumping = false;
+                animator.SetBool("IsJumping", false);
+            }
+        }
+    }
+
+    public void Die()
+    {
+        isDead = true;
+        animator.SetBool("IsDead", true);
+    }
+}
