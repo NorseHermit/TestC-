@@ -1,0 +1,92 @@
+using UnityEngine;
+
+[CreateAssetMenu(fileName = "NewEnemyStats", menuName = "Enemy/Stats")]
+public class EnemyStats : ScriptableObject
+{
+    public string enemyName;
+    public int maxHealth;
+    public int attackDamage;
+    public float moveSpeed;
+    public float attackSpeed;
+}
+
+using UnityEngine;
+
+public class Enemy : MonoBehaviour
+{
+    public EnemyStats stats; // Statistiche del nemico
+    private int currentHealth;
+
+    void Start()
+    {
+        currentHealth = stats.maxHealth;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    public void Attack(PlayerController player)
+    {
+        player.TakeDamage(stats.attackDamage);
+        // Implementa altre logiche di attacco, come animazioni, cooldown, ecc.
+    }
+
+    void Die()
+    {
+        // Implementa la logica di morte, come animazioni, drop di loot, ecc.
+        Debug.Log(stats.enemyName + " died.");
+        Destroy(gameObject);
+    }
+}
+
+using UnityEngine;
+
+public class Goblin : Enemy
+{
+    // Aggiungi comportamenti specifici per il Goblin
+    void Start()
+    {
+        base.Start(); // Chiama il metodo Start della classe base
+        // Implementa logiche specifiche per il Goblin
+    }
+
+    void Update()
+    {
+        // Implementa comportamenti di aggiornamento specifici per il Goblin
+    }
+}
+
+using UnityEngine;
+
+public class PlayerController : MonoBehaviour
+{
+    public int maxHealth = 100;
+    private int currentHealth;
+
+    void Start()
+    {
+        currentHealth = maxHealth;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        // Implementa la logica di morte del giocatore
+        Debug.Log("Player died.");
+        // Puoi aggiungere ulteriori logiche come il riavvio del livello, schermata di game over, ecc.
+    }
+}
