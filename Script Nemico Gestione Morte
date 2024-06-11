@@ -1,0 +1,43 @@
+using UnityEngine;
+
+public class Enemy : MonoBehaviour
+{
+    public EnemyStats stats; // Statistiche del nemico
+    private int currentHealth;
+
+    // Evento chiamato quando il nemico muore
+    public delegate void EnemyDeathHandler();
+    public event EnemyDeathHandler OnDeath;
+
+    void Start()
+    {
+        currentHealth = stats.maxHealth;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    public void Attack(PlayerController player)
+    {
+        player.TakeDamage(stats.attackDamage);
+        // Implementa altre logiche di attacco, come animazioni, cooldown, ecc.
+    }
+
+    void Die()
+    {
+        // Implementa la logica di morte, come animazioni, drop di loot, ecc.
+        Debug.Log(stats.enemyName + " died.");
+
+        // Chiamare l'evento di morte
+        OnDeath?.Invoke();
+
+        // Distruggere il nemico
+        Destroy(gameObject);
+    }
+}
