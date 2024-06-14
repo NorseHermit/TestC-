@@ -1,0 +1,59 @@
+using UnityEngine;
+
+public class GameMaster : MonoBehaviour
+{
+    public EnemyStats orcStats;
+    public EnemyStats skeletonStats;
+    public EnemyStats spiderStats;
+    public EnemyStats ghoulStats;
+
+    public GameObject orcPrefab;
+    public GameObject skeletonPrefab;
+    public GameObject spiderPrefab;
+    public GameObject ghoulPrefab;
+
+    public Transform[] spawnPoints;
+    public float spawnInterval = 5f;
+
+    private void Start()
+    {
+        // Inizia a generare nemici a intervalli regolari
+        InvokeRepeating("SpawnEnemies", 0f, spawnInterval);
+    }
+
+    private void SpawnEnemies()
+    {
+        foreach (Transform spawnPoint in spawnPoints)
+        {
+            int randomEnemy = Random.Range(0, 4); // Ci sono 4 tipi di nemici
+            GameObject enemyToSpawn = null;
+            EnemyStats stats = null;
+
+            switch (randomEnemy)
+            {
+                case 0:
+                    enemyToSpawn = orcPrefab;
+                    stats = orcStats;
+                    break;
+                case 1:
+                    enemyToSpawn = skeletonPrefab;
+                    stats = skeletonStats;
+                    break;
+                case 2:
+                    enemyToSpawn = spiderPrefab;
+                    stats = spiderStats;
+                    break;
+                case 3:
+                    enemyToSpawn = ghoulPrefab;
+                    stats = ghoulStats;
+                    break;
+            }
+
+            if (enemyToSpawn != null && stats != null)
+            {
+                GameObject enemy = Instantiate(enemyToSpawn, spawnPoint.position, spawnPoint.rotation);
+                enemy.GetComponent<Enemy>().stats = stats;
+            }
+        }
+    }
+}
