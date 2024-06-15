@@ -1,0 +1,48 @@
+using UnityEngine;
+
+public class AreaDamage : MonoBehaviour
+{
+    public int damageAmount = 10; // Quantità di danno inflitto
+    public float damageInterval = 1f; // Intervallo di tempo tra i danni
+    public string targetTag = "Player"; // Tag del bersaglio da colpire
+
+    private float damageTimer;
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag(targetTag))
+        {
+            ApplyDamage(other.gameObject);
+        }
+    }
+
+    void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag(targetTag))
+        {
+            damageTimer += Time.deltaTime;
+            if (damageTimer >= damageInterval)
+            {
+                ApplyDamage(other.gameObject);
+                damageTimer = 0f;
+            }
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag(targetTag))
+        {
+            damageTimer = 0f;
+        }
+    }
+
+    void ApplyDamage(GameObject target)
+    {
+        PlayerController player = target.GetComponent<PlayerController>();
+        if (player != null)
+        {
+            player.TakeDamage(damageAmount);
+        }
+    }
+}
