@@ -1,0 +1,49 @@
+using UnityEngine;
+
+public class MeleeWeapon : MonoBehaviour
+{
+    public int damage = 10; // Danno inflitto dall'arma
+    public float attackSpeed = 1.0f; // Velocità dell'attacco (tempo tra gli attacchi)
+    public float attackRange = 2.0f; // Portata dell'attacco
+    public string targetTag = "Enemy"; // Tag dei bersagli da colpire
+
+    private float attackCooldown;
+
+    void Update()
+    {
+        attackCooldown -= Time.deltaTime;
+    }
+
+    public void Attack()
+    {
+        if (attackCooldown > 0) return;
+
+        attackCooldown = attackSpeed;
+        
+        // Trova tutti i collider entro il raggio d'attacco
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange);
+        foreach (Collider hitCollider in hitColliders)
+        {
+            if (hitCollider.CompareTag(targetTag))
+            {
+                ApplyDamage(hitCollider.gameObject);
+            }
+        }
+    }
+
+    void ApplyDamage(GameObject target)
+    {
+        Enemy enemy = target.GetComponent<Enemy>();
+        if (enemy != null)
+        {
+            enemy.TakeDamage(damage);
+        }
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        // Visualizza la portata dell'attacco in scena
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
+    }
+}
