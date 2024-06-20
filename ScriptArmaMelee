@@ -1,0 +1,22 @@
+using UnityEngine;
+
+public class PlayerController : MonoBehaviour
+{
+    public MeleeWeapon equippedWeapon;
+
+    void Update()
+    {
+        if (Input.GetButtonDown("Fire1"))
+        {
+            if (equippedWeapon != null)
+            {
+                equippedWeapon.Attack();
+            }
+        }
+    }
+
+    public void EquipWeapon(MeleeWeapon newWeapon)
+    {
+        equippedWeapon = newWeapon;
+    }
+}
