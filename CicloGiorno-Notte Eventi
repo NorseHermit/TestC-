@@ -1,0 +1,54 @@
+using UnityEngine;
+
+public class DayNightCycle : MonoBehaviour
+{
+    public Light sun; // La luce direzionale che rappresenta il sole
+    public Light moon; // La luce direzionale che rappresenta la luna
+    public float dayDuration = 120f; // Durata di un giorno in secondi
+    public float startTime = 0f; // Ora di inizio del ciclo (0 = mezzanotte, 0.5 = mezzogiorno, 1 = mezzanotte successiva)
+
+    private float time; // Tempo corrente del ciclo (0-1)
+
+    void Start()
+    {
+        time = startTime;
+    }
+
+    void Update()
+    {
+        // Aggiorna il tempo del ciclo giorno-notte
+        time += Time.deltaTime / dayDuration;
+        if (time >= 1f)
+        {
+            time = 0f;
+        }
+
+        // Calcola l'angolo di rotazione del sole e della luna
+        float sunAngle = time * 360f - 90f;
+        float moonAngle = sunAngle + 180f;
+
+        // Ruota la luce del sole e della luna
+        sun.transform.rotation = Quaternion.Euler(new Vector3(sunAngle, 170f, 0f));
+        moon.transform.rotation = Quaternion.Euler(new Vector3(moonAngle, 170f, 0f));
+
+        // Modifica l'intensità della luce solare e lunare
+        sun.intensity = Mathf.Clamp01(Mathf.Cos(time * 2 * Mathf.PI) * 1.5f);
+        moon.intensity = Mathf.Clamp01(Mathf.Cos((time + 0.5f) * 2 * Mathf.PI) * 1.5f);
+
+        // Esegui eventi basati sull'ora del giorno
+        ExecuteEvents();
+    }
+
+    void ExecuteEvents()
+    {
+        // Esempio di eventi basati sull'ora del giorno
+        if (time >= 0.25f && time < 0.26f)
+        {
+            Debug.Log("It's morning! Time: " + time);
+        }
+        else if (time >= 0.75f && time < 0.76f)
+        {
+            Debug.Log("It's evening! Time: " + time);
+        }
+    }
+}
