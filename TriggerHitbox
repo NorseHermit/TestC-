@@ -1,0 +1,25 @@
+using UnityEngine;
+
+public class Hitbox : MonoBehaviour
+{
+    public int damageAmount = 10; // Quantità di danno inflitto
+    public string targetTag = "Enemy"; // Tag del bersaglio da colpire
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag(targetTag))
+        {
+            ApplyDamage(other.gameObject);
+        }
+    }
+
+    void ApplyDamage(GameObject target)
+    {
+        // Verifica se il bersaglio ha un componente EnemyHealth
+        EnemyHealth enemyHealth = target.GetComponent<EnemyHealth>();
+        if (enemyHealth != null)
+        {
+            enemyHealth.TakeDamage(damageAmount);
+        }
+    }
+}
