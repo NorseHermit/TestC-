@@ -1,0 +1,50 @@
+using UnityEngine;
+
+public class WheelController : MonoBehaviour
+{
+    public Transform wheelFL; // Ruota anteriore sinistra
+    public Transform wheelFR; // Ruota anteriore destra
+    public Transform wheelRL; // Ruota posteriore sinistra
+    public Transform wheelRR; // Ruota posteriore destra
+
+    public float maxSteerAngle = 30f; // Angolo massimo di sterzata
+    public float maxSpeed = 200f; // Velocità massima del veicolo
+    public float acceleration = 5f; // Accelerazione del veicolo
+
+    private float currentSpeed = 0f; // Velocità attuale del veicolo
+    private float steerInput = 0f; // Input di sterzata
+    private float accelInput = 0f; // Input di accelerazione
+
+    void Update()
+    {
+        // Riceve input dall'utente
+        steerInput = Input.GetAxis("Horizontal");
+        accelInput = Input.GetAxis("Vertical");
+
+        // Calcola la velocità attuale
+        currentSpeed += accelInput * acceleration * Time.deltaTime;
+        currentSpeed = Mathf.Clamp(currentSpeed, -maxSpeed, maxSpeed);
+
+        // Aggiorna la rotazione delle ruote
+        UpdateWheelRotation();
+    }
+
+    void UpdateWheelRotation()
+    {
+        // Angolo di sterzata
+        float steerAngle = maxSteerAngle * steerInput;
+
+        // Rotazione delle ruote anteriori per la sterzata
+        wheelFL.localRotation = Quaternion.Euler(0f, steerAngle, 0f);
+        wheelFR.localRotation = Quaternion.Euler(0f, steerAngle, 0f);
+
+        // Calcola la rotazione delle ruote basata sulla velocità attuale
+        float wheelRotationSpeed = currentSpeed * Time.deltaTime * 360f;
+
+        // Rotazione delle ruote intorno all'asse locale X
+        wheelFL.Rotate(Vector3.right, wheelRotationSpeed);
+        wheelFR.Rotate(Vector3.right, wheelRotationSpeed);
+        wheelRL.Rotate(Vector3.right, wheelRotationSpeed);
+        wheelRR.Rotate(Vector3.right, wheelRotationSpeed);
+    }
+}
