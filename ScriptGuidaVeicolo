@@ -1,0 +1,69 @@
+using UnityEngine;
+
+public class VehicleController : MonoBehaviour
+{
+    public Transform[] frontWheels; // Array delle ruote anteriori
+    public Transform[] rearWheels; // Array delle ruote posteriori
+
+    public float maxSteerAngle = 30f; // Angolo massimo di sterzata
+    public float motorForce = 1500f; // Forza del motore
+    public float brakeForce = 3000f; // Forza di frenata
+
+    private float currentSteerAngle;
+    private float currentAcceleration;
+    private float currentBrakeForce;
+    private Rigidbody rb;
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
+
+    void Update()
+    {
+        GetInput();
+        HandleMotor();
+        HandleSteering();
+        UpdateWheels();
+    }
+
+    private void GetInput()
+    {
+        currentAcceleration = motorForce * Input.GetAxis("Vertical");
+        currentSteerAngle = maxSteerAngle * Input.GetAxis("Horizontal");
+        currentBrakeForce = Input.GetKey(KeyCode.Space) ? brakeForce : 0f;
+    }
+
+    private void HandleMotor()
+    {
+        foreach (Transform wheel in rearWheels)
+        {
+            rb.AddForceAtPosition(wheel.forward * currentAcceleration, wheel.position);
+            if (currentBrakeForce > 0)
+            {
+                rb.AddForceAtPosition(-wheel.forward * currentBrakeForce, wheel.position);
+            }
+        }
+    }
+
+    private void HandleSteering()
+    {
+        foreach (Transform wheel in frontWheels)
+        {
+            wheel.localRotation = Quaternion.Euler(0f, currentSteerAngle, 0f);
+        }
+    }
+
+    private void UpdateWheels()
+    {
+        foreach (Transform wheel in frontWheels)
+        {
+            wheel.Rotate(Vector3.right, currentAcceleration * Time.deltaTime * 360);
+        }
+
+        foreach (Transform wheel in rearWheels)
+        {
+            wheel.Rotate(Vector3.right, currentAcceleration * Time.deltaTime * 360);
+        }
+    }
+}
