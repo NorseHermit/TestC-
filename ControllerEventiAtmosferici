@@ -1,0 +1,83 @@
+using UnityEngine;
+
+public class WeatherController : MonoBehaviour
+{
+    public GameObject rainEffect;
+    public GameObject snowEffect;
+    public GameObject fogEffect;
+
+    private float weatherChangeInterval = 60f; // Cambia meteo ogni 60 secondi
+    private float nextWeatherChangeTime;
+
+    void Start()
+    {
+        nextWeatherChangeTime = Time.time + weatherChangeInterval;
+        DeactivateAllWeatherEffects();
+        ActivateRandomWeatherEffect();
+    }
+
+    void Update()
+    {
+        if (Time.time >= nextWeatherChangeTime)
+        {
+            nextWeatherChangeTime = Time.time + weatherChangeInterval;
+            ActivateRandomWeatherEffect();
+        }
+    }
+
+    void DeactivateAllWeatherEffects()
+    {
+        if (rainEffect != null)
+            rainEffect.SetActive(false);
+        if (snowEffect != null)
+            snowEffect.SetActive(false);
+        if (fogEffect != null)
+            fogEffect.SetActive(false);
+    }
+
+    void ActivateRandomWeatherEffect()
+    {
+        DeactivateAllWeatherEffects();
+
+        int randomWeather = Random.Range(0, 3);
+        switch (randomWeather)
+        {
+            case 0:
+                if (rainEffect != null)
+                    rainEffect.SetActive(true);
+                break;
+            case 1:
+                if (snowEffect != null)
+                    snowEffect.SetActive(true);
+                break;
+            case 2:
+                if (fogEffect != null)
+                    fogEffect.SetActive(true);
+                break;
+        }
+    }
+
+    public void TriggerWeatherEffect(string weatherType)
+    {
+        DeactivateAllWeatherEffects();
+
+        switch (weatherType.ToLower())
+        {
+            case "rain":
+                if (rainEffect != null)
+                    rainEffect.SetActive(true);
+                break;
+            case "snow":
+                if (snowEffect != null)
+                    snowEffect.SetActive(true);
+                break;
+            case "fog":
+                if (fogEffect != null)
+                    fogEffect.SetActive(true);
+                break;
+            default:
+                Debug.LogWarning("Unknown weather type: " + weatherType);
+                break;
+        }
+    }
+}
