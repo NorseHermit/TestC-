@@ -1,0 +1,18 @@
+using UnityEngine;
+
+public class WeatherTrigger : MonoBehaviour
+{
+    public string weatherType; // Tipo di meteo da attivare quando il trigger viene attivato
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            WeatherController weatherController = FindObjectOfType<WeatherController>();
+            if (weatherController != null)
+            {
+                weatherController.TriggerWeatherEffect(weatherType);
+            }
+        }
+    }
+}
