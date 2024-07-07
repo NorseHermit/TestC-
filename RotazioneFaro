@@ -1,0 +1,40 @@
+using UnityEngine;
+
+public class FaroController : MonoBehaviour
+{
+    public Transform lightTransform; // Transform della luce del faro
+    public float rotationSpeed = 30f; // Velocità di rotazione in gradi per secondo
+    public bool isRotating = true; // Flag per abilitare/disabilitare la rotazione
+
+    void Update()
+    {
+        if (isRotating)
+        {
+            RotateLight();
+        }
+    }
+
+    void RotateLight()
+    {
+        lightTransform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
+    }
+
+    public void TriggerEvent(string eventName)
+    {
+        // Qui puoi chiamare metodi o attivare eventi basati sul nome dell'evento passato come parametro
+        Debug.Log("Evento triggerato: " + eventName);
+        // Esempio di gestione degli eventi
+        if (eventName == "StartRotation")
+        {
+            isRotating = true;
+        }
+        else if (eventName == "StopRotation")
+        {
+            isRotating = false;
+        }
+        else if (eventName == "ToggleRotation")
+        {
+            isRotating = !isRotating;
+        }
+    }
+}
