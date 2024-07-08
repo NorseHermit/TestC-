@@ -1,0 +1,18 @@
+using UnityEngine;
+
+public class FaroEventTrigger : MonoBehaviour
+{
+    public string eventName; // Nome dell'evento da triggerare
+    public FaroController faroController; // Riferimento allo script FaroController
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            if (faroController != null)
+            {
+                faroController.TriggerEvent(eventName);
+            }
+        }
+    }
+}
