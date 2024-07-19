@@ -1,0 +1,37 @@
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class MainMenu : MonoBehaviour
+{
+    public void NewGame()
+    {
+        // Carica la scena del gioco (sostituisci "GameScene" con il nome della tua scena di gioco)
+        SceneManager.LoadScene("GameScene");
+    }
+
+    public void ContinueGame()
+    {
+        // Logica per continuare il gioco (ad esempio, caricare uno stato salvato)
+        // Questo è solo un esempio, dovrai implementare il caricamento dello stato del gioco
+        Debug.Log("Continua gioco non implementato");
+    }
+
+    public void OpenOptions()
+    {
+        // Apri il menu delle opzioni
+        Debug.Log("Opzioni aperte");
+    }
+
+    public void OpenCredits()
+    {
+        // Apri la schermata dei crediti
+        Debug.Log("Crediti aperti");
+    }
+
+    public void QuitGame()
+    {
+        // Esce dal gioco
+        Application.Quit();
+        Debug.Log("Gioco chiuso");
+    }
+}
