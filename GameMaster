@@ -14,7 +14,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public EnemyStats stats; // Statistiche del nemico
+    public EnemyStats stats; // Statistiche nemico
     private int currentHealth;
 
     // Evento chiamato quando il nemico muore
@@ -43,7 +43,7 @@ public class Enemy : MonoBehaviour
 
     void Die()
     {
-        // Implementa la logica di morte, come animazioni, drop di loot, ecc.
+        // logica di morte, come animazioni, drop di loot, ecc.
         Debug.Log(stats.enemyName + " died.");
 
         // Chiamare l'evento di morte
