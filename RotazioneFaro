@@ -3,7 +3,7 @@ using UnityEngine;
 public class FaroController : MonoBehaviour
 {
     public Transform lightTransform; // Transform della luce del faro
-    public float rotationSpeed = 30f; // Velocità di rotazione in gradi per secondo
+    public float rotationSpeed = 30f; // Velocità rotazione in gradi per secondo
     public bool isRotating = true; // Flag per abilitare/disabilitare la rotazione
 
     void Update()
