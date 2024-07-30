@@ -1,0 +1,54 @@
+using UnityEngine;
+
+public class BatisferaController : MonoBehaviour
+{
+    public float diveSpeed = 5f; // Velocità di immersione
+    public float maxDepth = -50f; // Profondità massima di immersione
+    public KeyCode externalDiveKey = KeyCode.E; // Tasto per immersione dalla console esterna
+    public KeyCode internalDiveKey = KeyCode.I; // Tasto per immersione dalla console interna
+
+    private bool isDiving = false;
+    private Transform batisferaTransform;
+
+    void Start()
+    {
+        batisferaTransform = GetComponent<Transform>();
+    }
+
+    void Update()
+    {
+        HandleInput();
+
+        if (isDiving)
+        {
+            Dive();
+        }
+    }
+
+    void HandleInput()
+    {
+        // Controllo tasto per immersione dalla console esterna
+        if (Input.GetKeyDown(externalDiveKey))
+        {
+            isDiving = !isDiving;
+        }
+
+        // Controllo tasto per immersione dalla console interna
+        if (Input.GetKeyDown(internalDiveKey))
+        {
+            isDiving = !isDiving;
+        }
+    }
+
+    void Dive()
+    {
+        if (batisferaTransform.position.y > maxDepth)
+        {
+            batisferaTransform.Translate(Vector3.down * diveSpeed * Time.deltaTime);
+        }
+        else
+        {
+            isDiving = false; // Ferma l'immersione quando si raggiunge la profondità massima
+        }
+    }
+}
