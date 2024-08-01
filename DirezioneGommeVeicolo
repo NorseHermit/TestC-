@@ -11,7 +11,7 @@ public class WheelController : MonoBehaviour
     public float maxSpeed = 200f; // Velocità massima del veicolo
     public float acceleration = 5f; // Accelerazione del veicolo
 
-    private float currentSpeed = 0f; // Velocità attuale del veicolo
+    private float currentSpeed = 0f; // Velocità del veicolo
     private float steerInput = 0f; // Input di sterzata
     private float accelInput = 0f; // Input di accelerazione
 
