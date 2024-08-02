@@ -6,7 +6,7 @@ public class WeatherController : MonoBehaviour
     public GameObject snowEffect;
     public GameObject fogEffect;
 
-    private float weatherChangeInterval = 60f; // Cambia meteo ogni 60 secondi
+    private float weatherChangeInterval = 60f; // Cambia meteo ogni tot secondi
     private float nextWeatherChangeTime;
 
     void Start()
