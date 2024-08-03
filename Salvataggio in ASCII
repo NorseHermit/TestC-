@@ -27,7 +27,7 @@ public class DataASCII : MonoBehaviour
 
         file.Close();
 
-        Debug.Log("Save ASCII");
+        
   }
 
     public void load(string slot)
