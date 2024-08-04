@@ -8,4 +8,5 @@ public class EnemyStats : ScriptableObject
     public int attackDamage;
     public float moveSpeed;
     public float attackSpeed;
+    public float enemyRegen;
 }
