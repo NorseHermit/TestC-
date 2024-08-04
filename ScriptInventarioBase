@@ -1,0 +1,70 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+public class InventoryManager : MonoBehaviour
+{
+    public List<string> inventory = new List<string>();
+    public int maxInventorySize = 20;
+
+    // Aggiunge un oggetto all'inventario
+    public bool AddItem(string item)
+    {
+        if (inventory.Count >= maxInventorySize)
+        {
+            Debug.Log("Inventario pieno!");
+            return false;
+        }
+
+        inventory.Add(item);
+        Debug.Log("Aggiunto: " + item);
+        return true;
+    }
+
+    // Sposta un oggetto da una posizione all'altra
+    public bool MoveItem(int fromIndex, int toIndex)
+    {
+        if (fromIndex < 0 || fromIndex >= inventory.Count || toIndex < 0 || toIndex >= inventory.Count)
+        {
+            Debug.Log("Indice non valido!");
+            return false;
+        }
+
+        string item = inventory[fromIndex];
+        inventory.RemoveAt(fromIndex);
+        inventory.Insert(toIndex, item);
+        Debug.Log("Spostato: " + item + " da " + fromIndex + " a " + toIndex);
+        return true;
+    }
+
+    // Ordina l'inventario alfabeticamente
+    public void SortInventory()
+    {
+        inventory.Sort();
+        Debug.Log("Inventario ordinato.");
+    }
+
+    // Scarta un oggetto dall'inventario
+    public bool DiscardItem(int index)
+    {
+        if (index < 0 || index >= inventory.Count)
+        {
+            Debug.Log("Indice non valido!");
+            return false;
+        }
+
+        string item = inventory[index];
+        inventory.RemoveAt(index);
+        Debug.Log("Scartato: " + item);
+        return true;
+    }
+
+    // Stampa il contenuto dell'inventario
+    public void PrintInventory()
+    {
+        Debug.Log("Contenuto dell'inventario:");
+        for (int i = 0; i < inventory.Count; i++)
+        {
+            Debug.Log(i + ": " + inventory[i]);
+        }
+    }
+}
