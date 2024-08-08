@@ -13,7 +13,7 @@ public class SferaVita : MonoBehaviour
             MovimentoBase player = other.GetComponent<MovimentoBase>();
             if (player != null)
             {
-                player.Heal(healthAmount); // Chiama la funzione Heal del giocatore per recuperare vita
+                player.Heal(healthAmount); // Chiama la funzione Heal per recuperare vita
                 Destroy(gameObject); // Distruggi la sfera dopo essere stata raccolta
             }
         }
