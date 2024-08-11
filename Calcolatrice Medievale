@@ -33,7 +33,7 @@ namespace CalcoloResto
                 while (pagato < prezzotot)
                 {
                     Console.WriteLine("Hai pagato meno del dovuto.");
-                    Console.Write("Pagato: ");
+                    Console.Write("Pagato:  ");
                     pagato = Convert.ToInt32(Console.ReadLine());
 
                 }
