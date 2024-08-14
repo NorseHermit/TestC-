@@ -4,7 +4,7 @@ public class DayNightCycle : MonoBehaviour
 {
     public Light sun; // La luce direzionale che rappresenta il sole
     public Light moon; // La luce direzionale che rappresenta la luna
-    public float dayDuration = 120f; // Durata di un giorno in secondi
+    public float dayDuration = 120f; // Durata di un giorno in sec
     public float startTime = 0f; // Ora di inizio del ciclo (0 = mezzanotte, 0.5 = mezzogiorno, 1 = mezzanotte successiva)
 
     private float time; // Tempo corrente del ciclo (0-1)
