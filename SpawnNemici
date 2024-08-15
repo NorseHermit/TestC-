@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public GameObject enemyPrefab; // Prefab del nemico da generare
+    public GameObject enemyPrefab; // nemico da generare
     public Transform[] spawnPoints; // Punti di spawn dei nemici
     public float spawnInterval = 5f; // Intervallo di tempo tra uno spawn e l'altro
     public int maxEnemies = 10; // Numero massimo di nemici presenti contemporaneamente
