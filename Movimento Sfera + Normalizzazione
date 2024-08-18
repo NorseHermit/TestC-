@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class RollaBall : MonoBehaviour
 {
-    public float speed = 5f;  // Velocità di movimento
+    public float speed = 5f;  // Velocità
 
     void Update()
     {
