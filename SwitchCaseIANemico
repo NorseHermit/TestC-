@@ -30,7 +30,7 @@ public class Enemy : MonoBehaviour
     // 6 = wait
     // 3 = chase
     // 4 = chaseSetup
-    // 5 = arrested
+    5 = arrested
 
     void Start()
     {
