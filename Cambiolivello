@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class Portal : MonoBehaviour
 {
-    // Nome della scena da caricare. Puoi impostarlo dall'Inspector.
+    // Nome della scena da caricare.
     [SerializeField] private string sceneToLoad;
 
     private void OnTriggerEnter(Collider other)
