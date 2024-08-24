@@ -4,7 +4,7 @@ public class AreaDamage : MonoBehaviour
 {
     public int damageAmount = 10; // danno inflitto
     public float damageInterval = 1f; // Intervallo di tempo tra i danni
-    public string targetTag = "Player"; // Tag del bersaglio
+    public string targetTag = "Player"; // bersaglio
 
     private float damageTimer;
 
