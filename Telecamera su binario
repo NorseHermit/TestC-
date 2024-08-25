@@ -5,7 +5,7 @@ public class CameraRailMovement : MonoBehaviour
     public Transform[] railPoints; // Array dei punti del binario
     public float speed = 5f; // Velocità della telecamera
     private int currentPointIndex = 0; // Indice del punto corrente
-    private Transform targetPoint; // Punto di destinazione corrente
+    private Transform targetPoint; // destinazione corrente
 
     void Start()
     {
