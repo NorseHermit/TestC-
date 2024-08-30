@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class Hitbox : MonoBehaviour
 {
-    public int damageAmount = 10; // Quantità di danno inflitto
-    public string targetTag = "Enemy"; // Tag del bersaglio da colpire
+    public int damageAmount = 10; // danno inflitto
+    public string targetTag = "Enemy"; // Tag bersaglio da colpire
 
     void OnTriggerEnter(Collider other)
     {
