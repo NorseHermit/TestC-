@@ -5,7 +5,7 @@ public class MeleeWeapon : MonoBehaviour
     public int damage = 10; // Danno inflitto dall'arma
     public float attackSpeed = 1.0f; // Velocità dell'attacco (tempo tra gli attacchi)
     public float attackRange = 2.0f; // Portata dell'attacco
-    public string targetTag = "Enemy"; // Tag dei bersagli da colpire
+    public string targetTag = "Enemy"; // Tag dei bersagli
 
     private float attackCooldown;
 
