@@ -4,8 +4,8 @@ public class BatisferaController : MonoBehaviour
 {
     public float diveSpeed = 5f; // Velocità di immersione
     public float maxDepth = -50f; // Profondità massima di immersione
-    public KeyCode externalDiveKey = KeyCode.E; // Tasto per immersione dalla console esterna
-    public KeyCode internalDiveKey = KeyCode.I; // Tasto per immersione dalla console interna
+    public KeyCode externalDiveKey = KeyCode.E; // immersione dalla console esterna
+    public KeyCode internalDiveKey = KeyCode.I; // immersione dalla console interna
 
     private bool isDiving = false;
     private Transform batisferaTransform;
